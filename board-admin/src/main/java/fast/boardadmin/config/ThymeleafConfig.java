@@ -15,21 +15,13 @@ public class ThymeleafConfig {
     public SpringResourceTemplateResolver thymeleafTemplateResolver(
             SpringResourceTemplateResolver defaultTemplateResolver,
             Thymeleaf3Properties thymeleaf3Properties) {
-        defaultTemplateResolver.setUseDecoupledLogic(thymeleaf3Properties.isDecoupledLogic());
+        defaultTemplateResolver.setUseDecoupledLogic(thymeleaf3Properties.decoupledLogic());
 //        defaultTemplateResolver.setUseDecoupledLogic(true);
         return defaultTemplateResolver;
     }
 
 
-    @RequiredArgsConstructor
-    @Getter
-    @ConstructorBinding
     @ConfigurationProperties("spring.thymeleaf3")
-    public static class Thymeleaf3Properties {
-        /**
-         * Use Thymeleaf 3 Decoupled Logic
-         */
-        private final boolean decoupledLogic;
-    }
+    public record Thymeleaf3Properties(boolean decoupledLogic) { }
 
 }
