@@ -65,10 +65,9 @@ public class UserAccount extends AuditingFields {
         this.getRoleTypes().addAll(roleType);
     }
 
-    public void removeType(RoleType roleType){
+    public void removeRoleType(RoleType roleType) {
         this.getRoleTypes().remove(roleType);
     }
-
 
 
     @Override

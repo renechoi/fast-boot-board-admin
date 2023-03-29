@@ -1,0 +1,5 @@
+show GRANTS for 'rene'@'localhost';
+
+grant all on `fast_boot_board_admin`.* to 'rene'@'localhost'
+
+flush PRIVILEGES ;
