@@ -1,7 +1,6 @@
 package fast.boardadmin.controller;
 
-import fast.boardadmin.config.SecurityConfig;
-import fast.boardadmin.domain.constant.RoleType;
+import fast.boardadmin.config.TestSecurityConfig;
 import fast.boardadmin.dto.ArticleDto;
 import fast.boardadmin.dto.UserAccountDto;
 import fast.boardadmin.service.ArticleManagementService;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -25,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 게시글 관리")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(ArticleManagementController.class)
 class ArticleManagementControllerTest {
 

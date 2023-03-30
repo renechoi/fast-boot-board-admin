@@ -1,6 +1,5 @@
 package fast.boardadmin.dto;
 
-
 import fast.boardadmin.domain.AdminAccount;
 import fast.boardadmin.domain.constant.RoleType;
 
