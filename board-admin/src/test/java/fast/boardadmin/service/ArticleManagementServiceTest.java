@@ -3,10 +3,9 @@ package fast.boardadmin.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fast.boardadmin.domain.constant.RoleType;
 import fast.boardadmin.dto.ArticleDto;
-import fast.boardadmin.dto.UserAccountDto;
+import fast.boardadmin.dto.AdminAccountDto;
 import fast.boardadmin.dto.properties.ProjectProperties;
 import fast.boardadmin.dto.response.ArticleClientResponse;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -168,8 +167,8 @@ class ArticleManagementServiceTest {
             );
         }
 
-        private UserAccountDto createUserAccountDto() {
-            return UserAccountDto.of(
+        private AdminAccountDto createUserAccountDto() {
+            return AdminAccountDto.of(
                     "unoTest",
                     "pw",
                     Set.of(RoleType.ADMIN),
