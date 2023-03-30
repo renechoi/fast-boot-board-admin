@@ -1,5 +1,6 @@
 package fast.boardadmin.controller;
 
+import fast.boardadmin.config.GlobalControllerConfig;
 import fast.boardadmin.config.TestSecurityConfig;
 import fast.boardadmin.dto.ArticleDto;
 import fast.boardadmin.dto.UserAccountDto;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("컨트롤러 - 게시글 관리")
-@Import(TestSecurityConfig.class)
+@Import({TestSecurityConfig.class, GlobalControllerConfig.class})
 @WebMvcTest(ArticleManagementController.class)
 class ArticleManagementControllerTest {
 
