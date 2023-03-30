@@ -23,27 +23,45 @@ public record BoardAdminPrincipal(
 ) implements UserDetails, OAuth2User {
 
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
-        return of(username,password,roleTypes,email,nickname,memo,Map.of());
+        return BoardAdminPrincipal.of(username, password, roleTypes, email, nickname, memo, Map.of());
     }
 
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
-
         return new BoardAdminPrincipal(
-                username,password,
-                roleTypes.stream().map(RoleType::getRoleName).map(SimpleGrantedAuthority::new).collect(Collectors.toUnmodifiableSet()),
-                email,nickname,memo, oAuth2Attributes
+                username,
+                password,
+                roleTypes.stream()
+                        .map(RoleType::getRoleName)
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toUnmodifiableSet())
+                ,
+                email,
+                nickname,
+                memo,
+                oAuth2Attributes
         );
     }
 
-    public static BoardAdminPrincipal from(AdminAccountDto dto){
-        return BoardAdminPrincipal.of(dto.userId(), dto.userPassword(), dto.roleTypes(), dto.email(), dto.nickname(), dto.memo());
+    public static BoardAdminPrincipal from(AdminAccountDto dto) {
+        return BoardAdminPrincipal.of(
+                dto.userId(),
+                dto.userPassword(),
+                dto.roleTypes(),
+                dto.email(),
+                dto.nickname(),
+                dto.memo()
+        );
     }
 
     public AdminAccountDto toDto() {
         return AdminAccountDto.of(
                 username,
                 password,
-                authorities.stream().map(GrantedAuthority::getAuthority).map(RoleType::valueOf).collect(Collectors.toUnmodifiableSet()),
+                authorities.stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .map(RoleType::valueOf)
+                        .collect(Collectors.toUnmodifiableSet())
+                ,
                 email,
                 nickname,
                 memo
@@ -51,53 +69,16 @@ public record BoardAdminPrincipal(
     }
 
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+    @Override public String getUsername() { return username; }
+    @Override public String getPassword() { return password; }
+    @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
 
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return oAuth2Attributes;
-    }
-
-    @Override
-    public String getName() {
-        return username;
-    }
-
+    @Override public Map<String, Object> getAttributes() { return oAuth2Attributes; }
+    @Override public String getName() { return username; }
 
 }
