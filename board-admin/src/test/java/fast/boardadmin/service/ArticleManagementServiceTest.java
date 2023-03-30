@@ -1,11 +1,11 @@
 package fast.boardadmin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fast.boardadmin.domain.constant.RoleType;
 import fast.boardadmin.dto.ArticleDto;
 import fast.boardadmin.dto.UserAccountDto;
 import fast.boardadmin.dto.properties.ProjectProperties;
 import fast.boardadmin.dto.response.ArticleClientResponse;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 게시글 관리")
 class ArticleManagementServiceTest {
 
-    //    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평상시엔 비활성화")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -47,7 +46,7 @@ class ArticleManagementServiceTest {
 
         @DisplayName("게시글 API를 호출하면, 게시글을 가져온다.")
         @Test
-        void given_when_then() {
+        void givenNothing_whenCallingArticleApi_thenReturnsArticleList() {
             // Given
 
             // When
@@ -110,14 +109,14 @@ class ArticleManagementServiceTest {
             server.verify();
         }
 
-        @DisplayName("게시글 API을 호출하면, 게시글을 가져온다.")
+        @DisplayName("게시글 ID와 함께 게시글 API을 호출하면, 게시글을 가져온다.")
         @Test
-        void givenNothing_whenCallingArticleApi_thenReturnsArticle() throws Exception {
+        void givenArticleId_whenCallingArticleApi_thenReturnsArticle() throws Exception {
             // Given
             Long articleId = 1L;
             ArticleDto expectedArticle = createArticleDto("게시판", "글");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle),
                             MediaType.APPLICATION_JSON
@@ -137,7 +136,7 @@ class ArticleManagementServiceTest {
 
         @DisplayName("게시글 ID와 함께 게시글 삭제 API을 호출하면, 게시글을 삭제한다.")
         @Test
-        void givenArticleId_whenCallingDeleteArticleApi_thenDeletesAnArticle() throws Exception {
+        void givenArticleId_whenCallingDeleteArticleApi_thenDeletesArticle() throws Exception {
             // Given
             Long articleId = 1L;
             server
